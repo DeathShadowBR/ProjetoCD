@@ -5,33 +5,49 @@
  */
 package serverSide;
 
+import java.io.BufferedReader;
+import java.io.DataInputStream;
+import java.io.DataOutputStream;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
+import java.net.ServerSocket;
+import java.net.Socket;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
-import javafx.application.Application;
-import javafx.fxml.FXMLLoader;
-import javafx.scene.Parent;
-import javafx.scene.Scene;
-import javafx.stage.Stage;
 
 /**
  *
  * @author Gustavo
  */
-public class Server extends Application {
+public class Server {
     
-    @Override
-    public void start(Stage stage) throws Exception {
-        Parent root = FXMLLoader.load(getClass().getResource("ViewServerFXML.fxml"));
-        
-        Scene scene = new Scene(root);
-        
-        stage.setScene(scene);
-        stage.show();
-    }
+    private ServerSocket serverSocket;
+    private Socket connectionSocket;
+    private DataInputStream input;
+   private DataOutputStream output ;
+    
+    
+    public String createSocket(int port){
+        String message = "";
+        try {
+            
+            serverSocket = new ServerSocket(port);
+            while(true){
+                connectionSocket = serverSocket.accept();
+                input = new DataInputStream(connectionSocket.getInputStream());
+                output = new DataOutputStream(connectionSocket.getOutputStream());
+                System.out.println("Conexão aceita");
+                Thread clientServer = new ClientServer(connectionSocket,input,output);
+                System.out.println("Thread Cliente criada");
+                clientServer.start();
+            }
 
-    /**
-     * @param args the command line arguments
-     */
-    public static void main(String[] args) {
-        launch(args);
+        } catch (IOException ex) {
+            Logger.getLogger(Server.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return(message);
     }
 }

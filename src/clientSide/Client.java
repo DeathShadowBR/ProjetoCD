@@ -5,32 +5,46 @@
  */
 package clientSide;
 
-import javafx.application.Application;
-import javafx.fxml.FXMLLoader;
-import javafx.scene.Parent;
-import javafx.scene.Scene;
-import javafx.stage.Stage;
+import java.io.BufferedReader;
+import java.io.DataInputStream;
+import java.io.DataOutputStream;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
+import java.net.InetAddress;
+
+import java.net.Socket;
+
 
 /**
  *
  * @author Gustavo
  */
-public class Client extends Application {
+public class Client{
     
-    @Override
-    public void start(Stage stage) throws Exception {
-        Parent root = FXMLLoader.load(getClass().getResource("ViewClientFXML.fxml"));
-        
-        Scene scene = new Scene(root);
-        
-        stage.setScene(scene);
-        stage.show();
+    private Socket clientSocket;
+    private DataInputStream input;
+   private DataOutputStream output ;
+    
+    
+    public String createSocket(int port){
+        String message = "";
+        try {
+            clientSocket = new Socket("localhost",port);
+             
+             input = new DataInputStream(clientSocket.getInputStream());
+             output = new DataOutputStream(clientSocket.getOutputStream());
+             
+             output.writeUTF("Hello World");
+             System.out.println("Mensagem enviada");
+             message = input.readUTF();
+             System.out.println("Mensagem recebida");
+           
+        } catch (IOException ex) {
+            System.out.println("Erro Criação Socket do Cliente");
+        }
+        return message;
     }
-
-    /**
-     * @param args the command line arguments
-     */
-    public static void main(String[] args) {
-        launch(args);
-    }
+  
 }
