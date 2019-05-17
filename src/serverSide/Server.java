@@ -26,22 +26,18 @@ public class Server {
     
     private ServerSocket serverSocket;
     private Socket connectionSocket;
-    private DataInputStream input;
-   private DataOutputStream output ;
-    
-    
+
     public String createSocket(int port){
         String message = "";
         try {
             
             serverSocket = new ServerSocket(port);
             while(true){
+                System.out.println("[SERVER]: Esperando Conexão");
                 connectionSocket = serverSocket.accept();
-                input = new DataInputStream(connectionSocket.getInputStream());
-                output = new DataOutputStream(connectionSocket.getOutputStream());
-                System.out.println("Conexão aceita");
-                Thread clientServer = new ClientServer(connectionSocket,input,output);
-                System.out.println("Thread Cliente criada");
+                System.out.println("[SERVER]: Conexão aceita");
+                Thread clientServer = new ClientServer(connectionSocket);
+                System.out.println("[SERVER]: Thread Cliente criada");
                 clientServer.start();
             }
 

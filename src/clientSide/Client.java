@@ -5,16 +5,21 @@
  */
 package clientSide;
 
-import java.io.BufferedReader;
+
+import java.awt.Image;
+import java.awt.image.BufferedImage;
+import java.io.ByteArrayOutputStream;
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
+
+
+import java.io.File;
+import java.io.FileInputStream;
 import java.io.IOException;
-import java.io.InputStreamReader;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
-import java.net.InetAddress;
-
 import java.net.Socket;
+import javax.imageio.ImageIO;
 
 
 /**
@@ -24,27 +29,34 @@ import java.net.Socket;
 public class Client{
     
     private Socket clientSocket;
-    private DataInputStream input;
-   private DataOutputStream output ;
+    private ObjectInputStream input;
+    private ObjectOutputStream output;
     
     
-    public String createSocket(int port){
-        String message = "";
+    public void createSocket(int port) throws ClassNotFoundException{
+     
         try {
-            clientSocket = new Socket("localhost",port);
-             
-             input = new DataInputStream(clientSocket.getInputStream());
-             output = new DataOutputStream(clientSocket.getOutputStream());
-             
-             output.writeUTF("Hello World");
-             System.out.println("Mensagem enviada");
-             message = input.readUTF();
-             System.out.println("Mensagem recebida");
-           
+            
+            clientSocket = new Socket("localhost",port); 
+            output = new ObjectOutputStream(clientSocket.getOutputStream());
+            input = new ObjectInputStream(clientSocket.getInputStream());
+            System.out.println("[Client]: Estabelecendo Conexão");
+   
         } catch (IOException ex) {
-            System.out.println("Erro Criação Socket do Cliente");
+            System.out.println("[Client]: Erro Criação Socket do Cliente");
         }
-        return message;
+      
+    }
+    
+    public void enviarMensagem(Integer[][] matriz) throws IOException, ClassNotFoundException{
+        
+          
+        System.out.println("[Client]: Enviando Imagem");
+        output.writeObject(matriz);
+        
+        String message = (String) input.readObject();
+        System.out.println(message);
+           
     }
   
 }

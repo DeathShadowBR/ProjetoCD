@@ -31,9 +31,6 @@ public class ClientView extends Application {
      * @param args the command line arguments
      */
     public static void main(String[] args) {
-        launch(args);
-        Client client = new Client();
-        client.createSocket(9001);
-        
+        launch(args); 
     }
 }
