@@ -60,7 +60,8 @@ public class ViewClientFXMLController implements Initializable {
 
         try {
             client.createSocket(9000);
-            client.enviarMensagem(matriz);
+            Integer[][] matrizNegativo = client.enviarMensagem(matriz);
+            imageView.setImage(convertMatrizToPNG(matrizNegativo));
         } catch (ClassNotFoundException | IOException ex) {
             Logger.getLogger(ViewClientFXMLController.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -81,7 +82,12 @@ public class ViewClientFXMLController implements Initializable {
         file =  fileChooser.showOpenDialog(stage);
         System.out.println(file.toURI().toString());
         
-        matriz = ConvertImageMatriz.lerArq(file);
+        this.matriz = ConvertImageMatriz.lerArq(file);
+        
+        imageView.setImage(convertMatrizToPNG(this.matriz));
+    }
+    
+    public Image convertMatrizToPNG(Integer[][] matriz) throws IOException{
         int largura = matriz[0].length;
         int altura = matriz.length;
         
@@ -97,10 +103,8 @@ public class ViewClientFXMLController implements Initializable {
           File output = new File("image.png");
           ImageIO.write(image, "png", output);
           Image img = SwingFXUtils.toFXImage(ImageIO.read(output), null);
-          imageView.setImage(img);
           
-          
-    
+          return img;
     }
     /**
      * Initializes the controller class.

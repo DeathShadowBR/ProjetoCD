@@ -48,15 +48,19 @@ public class Client{
       
     }
     
-    public void enviarMensagem(Integer[][] matriz) throws IOException, ClassNotFoundException{
+    public Integer[][] enviarMensagem(Integer[][] matriz) throws IOException, ClassNotFoundException{
         
-          
+        String message = "ServiceImage";
+        output.writeObject(message);
         System.out.println("[Client]: Enviando Imagem");
         output.writeObject(matriz);
         
-        String message = (String) input.readObject();
+        message = (String) input.readObject();
         System.out.println(message);
+        
+        Integer[][] matrizNegativo = (Integer[][]) input.readObject();
            
+        return matrizNegativo;
     }
   
 }
