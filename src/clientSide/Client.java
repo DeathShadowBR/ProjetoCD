@@ -40,27 +40,34 @@ public class Client{
             clientSocket = new Socket("localhost",port); 
             output = new ObjectOutputStream(clientSocket.getOutputStream());
             input = new ObjectInputStream(clientSocket.getInputStream());
-            System.out.println("[Client]: Estabelecendo Conexão");
+            System.out.println("[CLIENT]: Estabelecendo Conexão");
    
         } catch (IOException ex) {
-            System.out.println("[Client]: Erro Criação Socket do Cliente");
+            System.out.println("[CLIENT]: Erro Criação Socket do Cliente");
         }
       
     }
     
-    public Integer[][] enviarMensagem(Integer[][] matriz) throws IOException, ClassNotFoundException{
+    public int[][] enviarMensagemService1(int[][] matriz,String tipo) throws IOException, ClassNotFoundException{
         
         String message = "ServiceImage";
         output.writeObject(message);
-        System.out.println("[Client]: Enviando Imagem");
+        
+        System.out.println("[CLIENT]: Enviando Imagem");
         output.writeObject(matriz);
         
         message = (String) input.readObject();
         System.out.println(message);
         
-        Integer[][] matrizNegativo = (Integer[][]) input.readObject();
-           
-        return matrizNegativo;
+        int[][] matrizResult = null;
+        
+        switch(tipo){
+            case "negativo":
+                 matrizResult = (int[][]) input.readObject();
+            break;
+        }
+       
+        return matrizResult;
     }
   
 }

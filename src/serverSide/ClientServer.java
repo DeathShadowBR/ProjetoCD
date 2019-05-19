@@ -40,6 +40,7 @@ public class ClientServer extends Thread {
            input = new ObjectInputStream(socket.getInputStream());
 
            while(true){
+             System.out.println("[SERVER]: Esperando Mensagem do Cliente");
              String messageService = (String) input.readObject();  
              switch(messageService) {
                  case "ServiceImage":
@@ -59,7 +60,7 @@ public class ClientServer extends Thread {
    public void serviceImage(){
        
        try {
-           Integer[][] matriz = (Integer[][]) input.readObject();
+           int[][] matriz = (int[][]) input.readObject();
            System.out.println("[SERVER]: Imagem Recebida");  
            String message = "[SERVER]: Imagem Recebida";
            output.writeObject(message);
@@ -67,12 +68,13 @@ public class ClientServer extends Thread {
            
            ServiceImage serviceImage = (ServiceImage) Naming.lookup("rmi://localhost:1099/ServiceImage");
            System.out.println("[SERVER]: Requisitando o serviço da Imagem");  
-           Integer[][] matrizNegativo = serviceImage.negativo(matriz);
+           int[][] matrizNegativo = serviceImage.negativo(matriz);
            
            System.out.println("[SERVER]: Imagem Negativa Criada");  
            
            output.writeObject(matrizNegativo);
            output.flush();
+           
            
        } catch (IOException | ClassNotFoundException | NotBoundException ex ) {
            Logger.getLogger(ClientServer.class.getName()).log(Level.SEVERE, null, ex);

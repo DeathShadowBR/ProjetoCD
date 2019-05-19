@@ -19,11 +19,11 @@ public class ServiceImageImpl extends UnicastRemoteObject implements ServiceImag
     }
     
     @Override
-     public Integer[][] negativo(Integer[][] matriz){
+     public int[][] negativo(int[][] matriz){
         int largura = matriz[0].length;
         int altura = matriz.length;
         
-        Integer[][] matrizNegativo = new Integer[altura][largura];
+        int[][] matrizNegativo = new int[altura][largura];
         int novoValor;
         for(int y=0;y<largura;y++){
             for(int x=0; x<altura;x++){

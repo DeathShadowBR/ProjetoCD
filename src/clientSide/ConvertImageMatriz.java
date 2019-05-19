@@ -21,9 +21,9 @@ import java.util.Scanner;
  */
 public class ConvertImageMatriz{
 
-    public static Integer[][] lerArq(File file){
+    public static int[][] lerArq(File file){
         
-        Integer[][] matriz = null;
+        int[][] matriz = null;
  
         try {
             Scanner scanner = new Scanner(file);
@@ -39,7 +39,7 @@ public class ConvertImageMatriz{
             
             scanner.nextInt();
             
-            matriz = new Integer[largura][altura];
+            matriz = new int[largura][altura];
             
             for(int y=0;y<altura;y++){
                 for(int x=0; x<largura;x++){
@@ -52,7 +52,7 @@ public class ConvertImageMatriz{
         }
         return matriz;
     }
-    public static void salvarArq (Integer[][] matriz,String nomeArq){
+    public static void salvarArq (int[][] matriz,String nomeArq){
         try {
             
                 FileWriter arq = new FileWriter(nomeArq + ".pgm");

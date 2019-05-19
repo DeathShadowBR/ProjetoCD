@@ -14,6 +14,6 @@ import java.rmi.RemoteException;
  */
 public interface ServiceImage extends Remote {
     
-    public Integer[][] negativo(Integer[][] matriz) throws RemoteException;
+    public int[][] negativo(int[][] matriz) throws RemoteException;
     
 }
