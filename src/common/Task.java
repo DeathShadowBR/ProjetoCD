@@ -3,17 +3,12 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package rmiSide;
-
-import java.rmi.Remote;
-import java.rmi.RemoteException;
+package common;
 
 /**
  *
  * @author Gustavo
  */
-public interface ServiceImage extends Remote {
-    
-    public int[][] negativo(int[][] matriz) throws RemoteException;
-    
+public interface Task<T> {
+    T execute();
 }

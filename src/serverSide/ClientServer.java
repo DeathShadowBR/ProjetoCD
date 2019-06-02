@@ -6,17 +6,18 @@
 package serverSide;
 
 
+import common.Service;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
-import java.net.MalformedURLException;
+
 import java.net.Socket;
 import java.rmi.Naming;
 import java.rmi.NotBoundException;
-import java.rmi.RemoteException;
+
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import rmiSide.ServiceImage;
+
 
 
 /**
@@ -66,16 +67,18 @@ public class ClientServer extends Thread {
            output.writeObject(message);
            output.flush();
            
-           ServiceImage serviceImage = (ServiceImage) Naming.lookup("rmi://localhost:1099/ServiceImage");
+           Service service= (Service) Naming.lookup("rmi://localhost:1099/Service");
+           ServiceImage image = new ServiceImage(matriz);
            System.out.println("[SERVER]: Requisitando o serviço da Imagem");  
-           int[][] matrizNegativo = serviceImage.negativo(matriz);
+           int[][] matrizNegativo = service.executeTask(image);
+           
+         
            
            System.out.println("[SERVER]: Imagem Negativa Criada");  
            
            output.writeObject(matrizNegativo);
            output.flush();
-           
-           
+
        } catch (IOException | ClassNotFoundException | NotBoundException ex ) {
            Logger.getLogger(ClientServer.class.getName()).log(Level.SEVERE, null, ex);
        }

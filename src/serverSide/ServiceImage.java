@@ -3,23 +3,36 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package rmiSide;
+package serverSide;
 
+
+import common.Task;
+import java.io.Serializable;
 import java.rmi.RemoteException;
-import java.rmi.server.UnicastRemoteObject;
+
 
 /**
  *
  * @author Gustavo
  */
-public class ServiceImageImpl extends UnicastRemoteObject implements ServiceImage  {
+public class ServiceImage implements Task<int[][]>, Serializable  {
     
-    public ServiceImageImpl() throws RemoteException{
+    public ServiceImage() throws RemoteException{
         super();
     }
     
+    private int[][] matriz;
+    
+    public ServiceImage(int[][] matriz) throws RemoteException{
+        this.matriz = matriz;
+    }
+    
     @Override
-     public int[][] negativo(int[][] matriz){
+    public int[][] execute(){
+        return negativo();
+    };
+    
+    private int[][] negativo(){
         int largura = matriz[0].length;
         int altura = matriz.length;
         

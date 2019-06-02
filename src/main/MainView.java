@@ -3,9 +3,10 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package clientSide;
+package main;
 
 import javafx.application.Application;
+
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
@@ -15,11 +16,12 @@ import javafx.stage.Stage;
  *
  * @author Gustavo
  */
-public class ClientView extends Application {
+public class MainView extends Application {
     
     @Override
     public void start(Stage stage) throws Exception {
-        Parent root = FXMLLoader.load(getClass().getResource("/screens/ViewClientFXML.fxml"));
+        Parent root = FXMLLoader.load(getClass().getResource("/screens/ViewMainFXML.fxml"));
+
         Scene scene = new Scene(root);
         stage.setScene(scene);
         stage.show();

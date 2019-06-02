@@ -7,7 +7,10 @@ package clientSide;
 
 
 
+import java.io.BufferedReader;
 import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
 import java.net.URL;
 import java.util.ResourceBundle;
 import java.util.logging.Level;
@@ -62,21 +65,41 @@ public class ViewClientFXMLController implements Initializable {
     private void loadUI(String ui){
         Parent root = null;
         try {
-            root = FXMLLoader.load(getClass().getResource(ui+".fxml"));
+            root = FXMLLoader.load(getClass().getResource("/screens/"+ui+".fxml"));
         } catch (IOException ex) {
             Logger.getLogger(ViewClientFXMLController.class.getName()).log(Level.SEVERE, null, ex);
         }
         borderpane.setCenter(root);
     }
-    
-    
+    private static void printLines(String name, InputStream ins) throws Exception {
+        String line = null;
+        BufferedReader in = new BufferedReader(
+            new InputStreamReader(ins));
+        while ((line = in.readLine()) != null) {
+            System.out.println(name + " " + line);
+        }
+    }
+    private static void runProcess(String command) throws Exception {
+    Process pro = Runtime.getRuntime().exec(command);
+    printLines(command + " stdout:", pro.getInputStream());
+    printLines(command + " stderr:", pro.getErrorStream());
+    pro.waitFor();
+    System.out.println(command + " exitValue() " + pro.exitValue());
+  }
     
     /**
      * Initializes the controller class.
      */
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        // TODO
+           try {
+               // TODO
+                //runProcess("javac -cp src src/serverSide/ServerView.java");
+                //runProcess("java -cp src serverSide/ServerView");
+            
+           } catch (Exception ex) {
+               Logger.getLogger(ViewClientFXMLController.class.getName()).log(Level.SEVERE, null, ex);
+           }
     }    
 
  

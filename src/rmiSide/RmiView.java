@@ -21,7 +21,7 @@ public class RmiView extends Application {
     
     @Override
     public void start(Stage stage) throws Exception {
-        Parent root = FXMLLoader.load(getClass().getResource("ViewRmiFXML.fxml"));
+        Parent root = FXMLLoader.load(getClass().getResource("/screens/ViewRmiFXML.fxml"));
         
         Scene scene = new Scene(root);
         
