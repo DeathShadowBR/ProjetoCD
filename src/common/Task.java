@@ -8,6 +8,7 @@ package common;
 /**
  *
  * @author Gustavo
+ * @param <T>
  */
 public interface Task<T> {
     T execute();

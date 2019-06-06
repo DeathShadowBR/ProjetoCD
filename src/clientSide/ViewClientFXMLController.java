@@ -45,13 +45,14 @@ public class ViewClientFXMLController implements Initializable {
 
     @FXML
     private Button btn3;
-    
+     
+
     @FXML
     private void btnClickService1(ActionEvent event) {
         loadUI("ViewService1FXML");
     }
     
-     @FXML
+    @FXML
     private void btnClickService2(ActionEvent event) {
         loadUI("ViewService2FXML");
     }

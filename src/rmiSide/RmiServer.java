@@ -9,6 +9,7 @@ import common.Service;
 import java.net.MalformedURLException;
 import java.rmi.Naming;
 import java.rmi.RemoteException;
+import java.rmi.registry.Registry;
 import java.rmi.server.UnicastRemoteObject;
 
 /**
@@ -18,7 +19,9 @@ import java.rmi.server.UnicastRemoteObject;
 public class RmiServer {
     
     public RmiServer() {
+       
 		try {
+                    
                         java.rmi.registry.LocateRegistry.createRegistry(1099); 
 			Service service = new ComputeService();
                         Service stub = (Service) UnicastRemoteObject.exportObject(service, 0);

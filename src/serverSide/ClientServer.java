@@ -10,10 +10,12 @@ import common.Service;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
+import java.net.MalformedURLException;
 
 import java.net.Socket;
 import java.rmi.Naming;
 import java.rmi.NotBoundException;
+import java.rmi.RemoteException;
 
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -28,9 +30,15 @@ public class ClientServer extends Thread {
    Socket socket;
    private ObjectInputStream input;
    private ObjectOutputStream output ;
+   private Service service;
    
    public ClientServer(Socket socket){
        this.socket = socket;
+       try {
+         service= (Service) Naming.lookup("rmi://localhost:1099/Service");
+       } catch (NotBoundException | MalformedURLException | RemoteException ex) {
+           Logger.getLogger(ClientServer.class.getName()).log(Level.SEVERE, null, ex);
+       }
    }   
    
    @Override
@@ -40,16 +48,23 @@ public class ClientServer extends Thread {
            output = new ObjectOutputStream(socket.getOutputStream());
            input = new ObjectInputStream(socket.getInputStream());
 
-           while(true){
+           
              System.out.println("[SERVER]: Esperando Mensagem do Cliente");
              String messageService = (String) input.readObject();  
              switch(messageService) {
                  case "ServiceImage":
-                    serviceImage(); 
+                    serviceImage();
+                    socket.close();
                  break;
+                 case "ServicePerfectNumber":
+                     servicePerfectNumber();
+                     socket.close();
+                             
+                 break;
+                     
              } 
              
-           }
+           
            
             
        } catch (IOException | ClassNotFoundException ex) {
@@ -67,21 +82,48 @@ public class ClientServer extends Thread {
            output.writeObject(message);
            output.flush();
            
-           Service service= (Service) Naming.lookup("rmi://localhost:1099/Service");
+           
            ServiceImage image = new ServiceImage(matriz);
            System.out.println("[SERVER]: Requisitando o serviço da Imagem");  
-           int[][] matrizNegativo = service.executeTask(image);
+           Object matrizNegativo = service.executeTask(image);
            
          
            
            System.out.println("[SERVER]: Imagem Negativa Criada");  
            
-           output.writeObject(matrizNegativo);
+           output.writeObject((int[][]) matrizNegativo);
            output.flush();
 
-       } catch (IOException | ClassNotFoundException | NotBoundException ex ) {
+       } catch (IOException | ClassNotFoundException ex ) {
            Logger.getLogger(ClientServer.class.getName()).log(Level.SEVERE, null, ex);
        }
        
    }
+
+    private void servicePerfectNumber(){
+        
+       try {
+            int pos = (int) input.readObject();
+            System.out.println("[SERVER]: Requisição Recebida");  
+            String message = "[SERVER]: Requisição Recebida";
+            output.writeObject(message);
+            output.flush();
+
+
+            ServicePerfectNumber pNumber = new ServicePerfectNumber(pos);
+            System.out.println("[SERVER]: Requisitando o serviço do Numero Perfeito");  
+            Object result = service.executeTask(pNumber);
+
+
+            System.out.println("[SERVER]: Numero Perfeito Encontrado");  
+
+            output.writeObject((String) result);
+            output.flush();
+            
+       } catch (IOException | ClassNotFoundException ex) {
+           Logger.getLogger(ClientServer.class.getName()).log(Level.SEVERE, null, ex);
+       }
+        
+       
+    }
 }

@@ -24,6 +24,9 @@ public class Client{
     private ObjectInputStream input;
     private ObjectOutputStream output;
     
+    public Client(int porta) throws ClassNotFoundException{
+        createSocket(porta);
+    }
     
     public void createSocket(int port) throws ClassNotFoundException{
      
@@ -59,7 +62,27 @@ public class Client{
             break;
         }
        
+        clientSocket.close();
         return matrizResult;
+    }
+    
+    public String enviarMensagemService2(int pos) throws IOException, ClassNotFoundException{
+        
+        String message = "ServicePerfectNumber";
+        output.writeObject(message);
+        
+        System.out.println("[CLIENT]: Enviando mensagem");
+        output.writeObject(pos);
+        
+        message = (String) input.readObject();
+        System.out.println(message);
+        
+        String result = (String) input.readObject();
+        System.out.println(result);
+        clientSocket.close();
+        
+        
+        return result;
     }
   
 }

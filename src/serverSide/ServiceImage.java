@@ -14,8 +14,9 @@ import java.rmi.RemoteException;
 /**
  *
  * @author Gustavo
+ * @param <T>
  */
-public class ServiceImage implements Task<int[][]>, Serializable  {
+public class ServiceImage<T> implements Task<T>, Serializable  {
     
     public ServiceImage() throws RemoteException{
         super();
@@ -28,8 +29,8 @@ public class ServiceImage implements Task<int[][]>, Serializable  {
     }
     
     @Override
-    public int[][] execute(){
-        return negativo();
+    public T execute(){
+        return (T) negativo();
     };
     
     private int[][] negativo(){

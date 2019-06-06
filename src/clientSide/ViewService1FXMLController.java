@@ -19,7 +19,6 @@ import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.Node;
 import javafx.scene.control.Button;
-import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 
@@ -49,12 +48,12 @@ public class ViewService1FXMLController implements Initializable {
 
     private File file;
     private int[][] matriz;
-    private Client client = new Client();
+    
     
     @FXML
     void btnClickNegative(ActionEvent event){
         try {
-            client.createSocket(9000);
+            Client client = new Client(9000);
             int[][] matrizNegativo = client.enviarMensagemService1(matriz,"negativo");
             imageView2.setImage(convertMatrizToPNG(matrizNegativo));
         } catch (ClassNotFoundException | IOException ex) {
