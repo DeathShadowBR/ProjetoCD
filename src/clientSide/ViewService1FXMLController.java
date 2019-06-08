@@ -54,7 +54,7 @@ public class ViewService1FXMLController implements Initializable {
     void btnClickNegative(ActionEvent event){
         try {
             Client client = new Client(9000);
-            int[][] matrizNegativo = client.enviarMensagemService1(matriz,"negativo");
+            int[][] matrizNegativo = client.enviarMensagemService1(matriz);
             imageView2.setImage(convertMatrizToPNG(matrizNegativo));
         } catch (ClassNotFoundException | IOException ex) {
             Logger.getLogger(ViewClientFXMLController.class.getName()).log(Level.SEVERE, null, ex);

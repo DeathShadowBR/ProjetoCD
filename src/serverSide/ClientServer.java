@@ -50,23 +50,21 @@ public class ClientServer extends Thread {
 
            
              System.out.println("[SERVER]: Esperando Mensagem do Cliente");
+             setConsole("Esperando Mensagem do Cliente");
              String messageService = (String) input.readObject();  
              switch(messageService) {
                  case "ServiceImage":
                     serviceImage();
+                    setConsole("Serviço Imagem Negativa Requisitada" +  socket.getPort());
                     socket.close();
                  break;
                  case "ServicePerfectNumber":
+                     setConsole("Serviço Número Perfeito Requisitado");
                      servicePerfectNumber();
-                     socket.close();
-                             
+                     socket.close();         
                  break;
                      
              } 
-             
-           
-           
-            
        } catch (IOException | ClassNotFoundException ex) {
            Logger.getLogger(ClientServer.class.getName()).log(Level.SEVERE, null, ex);
        }
@@ -76,21 +74,26 @@ public class ClientServer extends Thread {
    public void serviceImage(){
        
        try {
+            setConsole("Esperando Imagem");
            int[][] matriz = (int[][]) input.readObject();
-           System.out.println("[SERVER]: Imagem Recebida");  
+           System.out.println("[SERVER]: Imagem Recebida"); 
+           setConsole("Imagem Recebida");
            String message = "[SERVER]: Imagem Recebida";
+           
            output.writeObject(message);
+           setConsole("Confirmação do Recebimento da Imagem Enviado");
            output.flush();
            
            
            ServiceImage image = new ServiceImage(matriz);
-           System.out.println("[SERVER]: Requisitando o serviço da Imagem");  
+           System.out.println("[SERVER]: Requisitando o serviço da Imagem"); 
+           setConsole("Requisitando o serviço da Imagem para o RMISERVER");
            Object matrizNegativo = service.executeTask(image);
            
          
            
            System.out.println("[SERVER]: Imagem Negativa Criada");  
-           
+           setConsole("Imagem Negativa Criada");
            output.writeObject((int[][]) matrizNegativo);
            output.flush();
 
@@ -103,20 +106,24 @@ public class ClientServer extends Thread {
     private void servicePerfectNumber(){
         
        try {
+           setConsole("Esperando a Posição do Número Perfeito");
             int pos = (int) input.readObject();
-            System.out.println("[SERVER]: Requisição Recebida");  
+            System.out.println("[SERVER]: Posição Recebida");
+            setConsole("Posição Recebida");
             String message = "[SERVER]: Requisição Recebida";
             output.writeObject(message);
+            setConsole("Confirmação do Recebimento Enviada");
             output.flush();
 
 
             ServicePerfectNumber pNumber = new ServicePerfectNumber(pos);
             System.out.println("[SERVER]: Requisitando o serviço do Numero Perfeito");  
+            setConsole("Requisitando o serviço do Numero Perfeito para o RMISERVER");
             Object result = service.executeTask(pNumber);
 
 
             System.out.println("[SERVER]: Numero Perfeito Encontrado");  
-
+            setConsole("Numero Perfeito Encontrado");
             output.writeObject((String) result);
             output.flush();
             
@@ -125,5 +132,9 @@ public class ClientServer extends Thread {
        }
         
        
+    }
+    
+     private void setConsole(String message){
+        ViewServerFXMLController.instancia.setConsole("[SERVER]: [CLIENTE: " + socket.getPort() + "]  " + message + "\n");
     }
 }

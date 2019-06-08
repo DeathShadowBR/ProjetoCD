@@ -12,15 +12,21 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.net.URL;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.ResourceBundle;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javafx.application.Platform;
+import javafx.concurrent.Task;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Parent;
 import javafx.scene.control.Button;
+import javafx.scene.control.ScrollPane;
+import javafx.scene.control.TextArea;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.BorderPane;
 
@@ -33,7 +39,12 @@ import javafx.scene.layout.BorderPane;
 public class ViewClientFXMLController implements Initializable {
 
   
-       @FXML
+    public static ViewClientFXMLController instancia;
+    
+    
+  
+    
+    @FXML
     private BorderPane borderpane;
 
     @FXML
@@ -46,9 +57,13 @@ public class ViewClientFXMLController implements Initializable {
     @FXML
     private Button btn3;
      
+  
+    @FXML
+    private TextArea textArea;
 
     @FXML
     private void btnClickService1(ActionEvent event) {
+        
         loadUI("ViewService1FXML");
     }
     
@@ -62,6 +77,16 @@ public class ViewClientFXMLController implements Initializable {
         loadUI("ViewService3FXML");
     }
     
+    public void setConsole(String message){
+        Date dNow = new Date( );
+        SimpleDateFormat ft = new SimpleDateFormat ("hh:mm:ss:SS");
+        Platform.runLater(new Runnable() {
+            @Override public void run() {
+                textArea.appendText( ft.format(dNow) + "->" + message);
+            }
+        });
+        
+    }
     
     private void loadUI(String ui){
         Parent root = null;
@@ -72,31 +97,15 @@ public class ViewClientFXMLController implements Initializable {
         }
         borderpane.setCenter(root);
     }
-    private static void printLines(String name, InputStream ins) throws Exception {
-        String line = null;
-        BufferedReader in = new BufferedReader(
-            new InputStreamReader(ins));
-        while ((line = in.readLine()) != null) {
-            System.out.println(name + " " + line);
-        }
-    }
-    private static void runProcess(String command) throws Exception {
-    Process pro = Runtime.getRuntime().exec(command);
-    printLines(command + " stdout:", pro.getInputStream());
-    printLines(command + " stderr:", pro.getErrorStream());
-    pro.waitFor();
-    System.out.println(command + " exitValue() " + pro.exitValue());
-  }
-    
     /**
      * Initializes the controller class.
      */
     @Override
     public void initialize(URL url, ResourceBundle rb) {
            try {
-               // TODO
-                //runProcess("javac -cp src src/serverSide/ServerView.java");
-                //runProcess("java -cp src serverSide/ServerView");
+               
+               instancia = this;
+               textArea.setEditable(false);
             
            } catch (Exception ex) {
                Logger.getLogger(ViewClientFXMLController.class.getName()).log(Level.SEVERE, null, ex);

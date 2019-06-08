@@ -27,6 +27,8 @@ public class ServerView extends Application {
         
         stage.setScene(scene);
         stage.show();
+        stage.setTitle("SERVER");
+        stage.setResizable(false);
     }
 
     /**

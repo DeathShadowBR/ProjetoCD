@@ -6,12 +6,20 @@
 package rmiSide;
 
 import java.io.IOException;
+import java.net.MalformedURLException;
+import java.rmi.Naming;
+import java.rmi.NotBoundException;
+import java.rmi.RemoteException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javafx.application.Application;
 import static javafx.application.Application.launch;
+import javafx.application.Platform;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
+import javafx.stage.WindowEvent;
 
 /**
  *
@@ -27,6 +35,9 @@ public class RmiView extends Application {
         
         stage.setScene(scene);
         stage.show();
+        stage.setTitle("RMI SERVER");
+        stage.setResizable(false);
+      
     }
 
     /**

@@ -12,6 +12,7 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.Scanner;
+import javafx.application.Platform;
 
 
 
@@ -20,9 +21,9 @@ import java.util.Scanner;
  * @author Gustavo
  */
 public class ConvertImageMatriz{
-
+    
     public static int[][] lerArq(File file){
-        
+               
         int[][] matriz = null;
  
         try {

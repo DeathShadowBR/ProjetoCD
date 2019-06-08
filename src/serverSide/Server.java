@@ -28,10 +28,13 @@ public class Server {
             serverSocket = new ServerSocket(port);
             while(true){
                 System.out.println("[SERVER]: Esperando Conexão");
+                setConsole("Esperando Conexão");
                 connectionSocket = serverSocket.accept();
                 System.out.println("[SERVER]: Conexão aceita");
+                setConsole("Conexão aceita");
                 Thread clientServer = new ClientServer(connectionSocket);
                 System.out.println("[SERVER]: Thread Cliente criada");
+                setConsole("Thread Cliente criada");
                 clientServer.start();
             }
 
@@ -39,5 +42,9 @@ public class Server {
             Logger.getLogger(Server.class.getName()).log(Level.SEVERE, null, ex);
         }
         return(message);
+    }
+    
+      private void setConsole(String message){
+        ViewServerFXMLController.instancia.setConsole("[SERVER]: " + message + "\n");
     }
 }

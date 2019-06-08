@@ -11,6 +11,7 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
+import javafx.stage.WindowEvent;
 
 /**
  *
@@ -25,6 +26,12 @@ public class MainView extends Application {
         Scene scene = new Scene(root);
         stage.setScene(scene);
         stage.show();
+        stage.setTitle("Projeto CD");
+        stage.setResizable(false);
+         stage.setOnCloseRequest((WindowEvent e) -> {
+         System.out.println("Window close request ...");
+            System.exit(0);
+         });
     }
 
     /**

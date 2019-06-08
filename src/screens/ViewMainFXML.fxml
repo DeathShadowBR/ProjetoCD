@@ -1,13 +1,58 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Button?>
-<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
 
 
-<AnchorPane id="AnchorPane" prefHeight="400.0" prefWidth="600.0" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/11.0.1" fx:controller="main.ViewMainFXMLController">
-   <children>
-      <Button fx:id="btnClient" layoutX="269.0" layoutY="116.0" mnemonicParsing="false" onAction="#onClickClient" text="Cliente" />
-      <Button fx:id="btnServer" layoutX="265.0" layoutY="154.0" mnemonicParsing="false" onAction="#onClickServer" text="Servidor" />
-      <Button fx:id="btnRMI" layoutX="276.0" layoutY="188.0" mnemonicParsing="false" onAction="#onClickRMI" text="RMI" />
-   </children>
-</AnchorPane>
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" style="-fx-background-color: #2A2A2A;" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="main.ViewMainFXMLController">
+   <center>
+      <VBox alignment="CENTER" maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="200.0" prefWidth="100.0" BorderPane.alignment="CENTER">
+         <children>
+            <Button fx:id="btnClient" mnemonicParsing="false" onAction="#onClickClient" prefHeight="30.0" prefWidth="90.0" style="-fx-background-color: #929292; -fx-text-fill: white;" text="Cliente">
+               <VBox.margin>
+                  <Insets bottom="10.0" />
+               </VBox.margin>
+            </Button>
+            <Button fx:id="btnServer" mnemonicParsing="false" onAction="#onClickServer" prefHeight="30.0" prefWidth="90.0" style="-fx-background-color: #929292; -fx-text-fill: white;" text="Servidor">
+               <VBox.margin>
+                  <Insets bottom="10.0" />
+               </VBox.margin>
+            </Button>
+            <Button fx:id="btnRMI" mnemonicParsing="false" onAction="#onClickRMI" prefHeight="30.0" prefWidth="90.0" style="-fx-background-color: #929292; -fx-text-fill: white;" text="RMI">
+               <VBox.margin>
+                  <Insets bottom="10.0" />
+               </VBox.margin>
+            </Button>
+         </children>
+         <BorderPane.margin>
+            <Insets />
+         </BorderPane.margin>
+      </VBox>
+   </center>
+   <top>
+      <Label text="Projeto de Computação Distruibuída" textFill="WHITE" BorderPane.alignment="CENTER">
+         <font>
+            <Font size="18.0" />
+         </font>
+         <BorderPane.margin>
+            <Insets top="30.0" />
+         </BorderPane.margin>
+      </Label>
+   </top>
+   <bottom>
+      <VBox alignment="CENTER" prefHeight="88.0" prefWidth="600.0" BorderPane.alignment="CENTER">
+         <children>
+            <Label prefHeight="17.0" prefWidth="503.0" text="*** É necessario iniciar o SERVIDOR e o RMI antes de fazer qualquer operação no CLIENTE" textFill="WHITE" wrapText="true" />
+            <Label text="Gustavo Lopes Santana - 2019" textFill="WHITE">
+               <VBox.margin>
+                  <Insets top="20.0" />
+               </VBox.margin>
+            </Label>
+         </children>
+      </VBox>
+   </bottom>
+</BorderPane>
