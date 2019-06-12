@@ -63,6 +63,11 @@ public class ClientServer extends Thread {
                      servicePerfectNumber();
                      socket.close();         
                  break;
+                 case "ServiceHarmonicSeries":
+                     setConsole("Serviço Serie Harmonica Requisitado");
+                     serviceHarmonicSeries();
+                     socket.close();         
+                 break;
                      
              } 
        } catch (IOException | ClassNotFoundException ex) {
@@ -124,6 +129,38 @@ public class ClientServer extends Thread {
 
             System.out.println("[SERVER]: Numero Perfeito Encontrado");  
             setConsole("Numero Perfeito Encontrado");
+            output.writeObject((String) result);
+            output.flush();
+            
+       } catch (IOException | ClassNotFoundException ex) {
+           Logger.getLogger(ClientServer.class.getName()).log(Level.SEVERE, null, ex);
+       }
+        
+       
+    }
+    
+    
+       private void serviceHarmonicSeries(){
+        
+       try {
+            setConsole("Esperando o range da Serie Harmonica");
+            int range = (int) input.readObject();
+            System.out.println("[SERVER]: Range Recebida");
+            setConsole("Posição Recebida");
+            String message = "[SERVER]: Requisição Recebida";
+            output.writeObject(message);
+            setConsole("Confirmação do Recebimento Enviada");
+            output.flush();
+
+
+            ServiceHarmonicSeries hResult = new ServiceHarmonicSeries(range);
+            System.out.println("[SERVER]: Requisitando o serviço da Serie Harmonica");  
+            setConsole("Requisitando o serviço da Serie Harmonica para o RMISERVER");
+            Object result = service.executeTask(hResult);
+
+
+            System.out.println("[SERVER]: Resultado da Serie Harmonica Encontrado");  
+            setConsole("Resultado da Serie Harmonica Encontrado");
             output.writeObject((String) result);
             output.flush();
             

@@ -16,6 +16,11 @@ import common.Task;
 public class ComputeService implements Service {
     @Override
     public <T> T executeTask(Task<T> t){
-        return t.execute();
+        long tempoInicial = System.currentTimeMillis();
+        String name = t.getClass().getName();
+        ViewRmiFXMLController.instancia.setConsole("[RMISERVER: " + "]: Executando o Serviço -> " + name + "\n");
+        T result = t.execute();
+        ViewRmiFXMLController.instancia.setConsole("[RMISERVER: " + "]: Serviço executado em " + ((System.currentTimeMillis() - tempoInicial) / 1000d) + "\n");
+        return result;
     }
 }

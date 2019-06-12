@@ -5,9 +5,17 @@
  */
 package clientSide;
 
+import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javafx.event.ActionEvent;
+import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.control.Button;
+import javafx.scene.control.Label;
+import javafx.scene.control.TextField;
 
 /**
  * FXML Controller class
@@ -16,6 +24,31 @@ import javafx.fxml.Initializable;
  */
 public class ViewService3FXMLController implements Initializable {
 
+    
+    
+    @FXML
+    private Button btnEnviar;
+
+    @FXML
+    private Label labelResult;
+    
+    @FXML
+    private TextField textInputValor;
+
+    @FXML
+    void onClickSend(ActionEvent event) throws IOException {
+        try {
+           Client client = new Client(9000);
+           String result = client.enviarMensagemService3(Integer.parseInt(textInputValor.getText()));
+           System.out.println(Integer.parseInt(textInputValor.getText()));
+           labelResult.setText(result);
+
+           } catch (ClassNotFoundException ex) {
+               Logger.getLogger(ViewService2FXMLController.class.getName()).log(Level.SEVERE, null, ex);
+           }
+    }
+
+    
     /**
      * Initializes the controller class.
      */

@@ -27,17 +27,12 @@ public class RmiServer {
 			Service service = new ComputeService();
                         Service stub = (Service) UnicastRemoteObject.exportObject(service, 0);
 			Naming.rebind("rmi://localhost:1099/Service", stub);
-                        setConsole("Bind Criada Service");
-                        System.out.println("[RMISERVER]:Bind Criada Service");
-                       
-                        
+                        ViewRmiFXMLController.instancia.setConsole("[RMISERVER: " + "]: Bind Criada Service + \n");
+                     
 		}
 		catch( MalformedURLException | RemoteException e ) {
 			System.out.println( "Trouble: " + e );
 		}
 	}
-    
-    private void setConsole(String message){
-        ViewRmiFXMLController.instancia.setConsole("[RMISERVER: " + "]:  " + message + "\n");
-    }
+  
 }

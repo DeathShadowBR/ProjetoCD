@@ -91,6 +91,30 @@ public class Client{
         
         return result;
     }
+    
+    
+    public String enviarMensagemService3(int range) throws IOException, ClassNotFoundException{
+        
+        String message = "ServiceHarmonicSeries";
+        setConsole("Serviço do Serie Harmonica Selecionado");
+        output.writeObject(message);
+        
+        System.out.println("[CLIENT]: Enviando mensagem");
+        setConsole("Enviando mensagem");
+        output.writeObject(range);
+        
+        message = (String) input.readObject();
+        setConsole("Resposta " + message);
+        System.out.println(message);
+        
+        String result = (String) input.readObject();
+        System.out.println(result);
+        setConsole("Resultado Recebido");
+        clientSocket.close();
+        
+        
+        return result;
+    }
   
     private void setConsole(String message){
         ViewClientFXMLController.instancia.setConsole("[CLIENT: " + clientSocket.getLocalPort() + "]:  " + message + "\n");
