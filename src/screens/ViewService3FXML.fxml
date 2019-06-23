@@ -7,11 +7,20 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-
-<HBox alignment="CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="450.0" prefWidth="921.0" style="-fx-background-color: #747474;" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="clientSide.ViewService3FXMLController">
+<HBox alignment="CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="450.0" prefWidth="921.0" style="-fx-background-color: #747474;" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="clientSide.ViewService3FXMLController">
    <children>
       <VBox alignment="CENTER" prefHeight="450.0" prefWidth="344.0" spacing="20.0">
          <children>
+            <Label layoutX="47.0" layoutY="124.0" text="Serviço 3" textAlignment="CENTER" textFill="WHITE" wrapText="true">
+               <font>
+                  <Font size="18.0" />
+               </font>
+            </Label>
+            <Label layoutX="10.0" layoutY="144.0" text="Calcula N posições de uma serie Harmonica" textAlignment="CENTER" textFill="WHITE" wrapText="true">
+               <font>
+                  <Font size="18.0" />
+               </font>
+            </Label>
             <Label text="Digite quantas posições será calculado a serie harmonica" textAlignment="CENTER" textFill="WHITE" wrapText="true">
                <font>
                   <Font size="14.0" />
@@ -19,7 +28,7 @@
             </Label>
             <TextField fx:id="textInputValor" maxWidth="100.0" minWidth="100.0" prefWidth="100.0" />
             <Button fx:id="btnEnviar" mnemonicParsing="false" onAction="#onClickSend" prefHeight="30.0" prefWidth="90.0" style="-fx-background-color: #2A2A2A; -fx-text-fill: white;" text="Enviar" />
-            <Label fx:id="labelResult" textFill="WHITE">
+            <Label fx:id="labelResult" textAlignment="CENTER" textFill="WHITE">
                <font>
                   <Font size="18.0" />
                </font>
